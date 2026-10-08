@@ -1,0 +1,279 @@
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --shadow-brutal: var(--shadow-brutal-val);
+  --shadow-brutal-sm: var(--shadow-brutal-sm-val);
+  --shadow-brutal-lg: var(--shadow-brutal-lg-val);
+  --shadow-brutal-xl: var(--shadow-brutal-xl-val);
+  --font-sans: var(--font-body-val);
+  --font-body: var(--font-body-val);
+  --font-display: var(--font-heading-val);
+  --font-heading: var(--font-heading-val);
+  --font-mono: var(--font-mono-val);
+}
+
+@layer base {
+  *, ::before, ::after, ::backdrop, ::file-selector-button { border-color: var(--border); }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; min-height: 100%; }
+
+/* Placeholder ink — mirrors buildThemeCssContent. Without this an exported
+   input falls back to the UA default (~54% alpha of the inherited color,
+   measured 2.64-2.79:1) wherever the author did not set it explicitly. */
+::placeholder { color: var(--muted-foreground); opacity: 1; }
+
+/* Affordance edges (WCAG 1.4.11) — mirrors buildThemeCssContent so an exported
+   project renders controls exactly as the preview did. Interactive elements
+   only; decorative container borders keep the theme hairline. Controls that ask
+   for a colored edge (border-primary, …) are deliberately untouched. */
+button.border-border, a.border-border, [role="button"].border-border,
+label.border-border, input.border-border, select.border-border, textarea.border-border,
+button.border-input, a.border-input, [role="button"].border-input,
+label.border-input, input.border-input, select.border-input, textarea.border-input {
+  border-color: var(--affordance-edge, var(--border)) !important;
+}
+body { min-height: 100vh; background-color: var(--background); color: var(--foreground); }
+/* Preserve contextual ink on media/surface compositions. Explicit text-*
+   utilities still override inheritance, exactly as they do in the preview.
+   This must remain in Tailwind's base layer; an unlayered element rule wins
+   over layered utilities regardless of source order. */
+@layer base {
+  h1, h2, h3, h4, h5, h6, a { color: inherit; }
+}
+/* Native inputs (radio/checkbox/range/progress) follow the theme primary instead of
+   UA-default blue — accent-color inherits document-wide; --primary comes from the
+   per-theme :root vars appended after this base block. */
+:root { accent-color: var(--primary); }
+
+
+
+:root {
+    --background: #eef2f6;
+    --foreground: #131720;
+    --card: #ffffff;
+    --card-foreground: #131720;
+    --popover: #ffffff;
+    --popover-foreground: #131720;
+    --primary: #ff0007;
+    --primary-foreground: #ffffff;
+    --secondary: #e4e9ef;
+    --secondary-foreground: #131720;
+    --muted: #e9edf2;
+    --muted-foreground: #4f5967;
+    --accent: #243041;
+    --accent-foreground: #f8fafc;
+    --destructive: #c9362c;
+    --destructive-foreground: #ffffff;
+    --border: #c7d0d9;
+    --input: #dbe3eb;
+    --ring: #ff0007;
+    --radius: 0.625rem;
+    --shadow-brutal-val: 6.5px 7.5px 0 0 rgba(0,0,0,1);
+    --shadow-brutal-sm-val: 3px 3px 0 0 rgba(0,0,0,0.55);
+    --shadow-brutal-lg-val: 8px 10px 0 0 rgba(0,0,0,1);
+    --shadow-brutal-xl-val: 8px 10px 0 0 rgba(0,0,0,1);
+    --font-body-val: Architects Daughter, cursive;
+    --font-heading-val: Architects Daughter, cursive;
+    --font-mono-val: JetBrains Mono, monospace;
+    --affordance-edge: #7f868f;
+}
+
+/* === RADIUS (all rounded-* → theme radius scale) === */
+.rounded-none  { border-radius: 0               !important; }
+.rounded-sm    { border-radius: 0.313rem       !important; }
+.rounded       { border-radius: 0.625rem    !important; }
+.rounded-md    { border-radius: 0.625rem    !important; }
+.rounded-lg    { border-radius: 0.938rem       !important; }
+.rounded-xl    { border-radius: 1.25rem         !important; }
+.rounded-2xl   { border-radius: 1.875rem         !important; }
+.rounded-3xl   { border-radius: 2.5rem         !important; }
+.rounded-full  { border-radius: 9999px          !important; }
+/* top/bottom/left/right variants */
+.rounded-t-sm, .rounded-t    { border-top-left-radius: 0.313rem;  border-top-right-radius: 0.313rem  !important; }
+.rounded-t-md, .rounded-t-lg { border-top-left-radius: 0.625rem; border-top-right-radius: 0.625rem !important; }
+.rounded-b-sm, .rounded-b    { border-bottom-left-radius: 0.313rem;  border-bottom-right-radius: 0.313rem  !important; }
+.rounded-b-md, .rounded-b-lg { border-bottom-left-radius: 0.625rem; border-bottom-right-radius: 0.625rem !important; }
+/* arbitrary values, pseudo-element variants and inline radii are clamped on CONTROLS only
+   (operator decision 2026-09-15, docs/superpowers/specs/2026-09-15-premium-display-brief.md P5):
+   the drift this rule was written for is a pill button or an input wandering off the
+   theme's scale. Sections, chapters, cards and media keep an authored rounded-[…] so a
+   curved chapter or a 2.5rem surface can exist; the same function serves preview and export. */
+button[class*="rounded-["], a[class*="rounded-["], input[class*="rounded-["], select[class*="rounded-["], textarea[class*="rounded-["], [role="button"][class*="rounded-["] { border-radius: 0.625rem !important; }
+button[class*="before:rounded-["]::before, a[class*="before:rounded-["]::before, [role="button"][class*="before:rounded-["]::before { border-radius: 0.625rem !important; }
+button[class*="after:rounded-["]::after, a[class*="after:rounded-["]::after, [role="button"][class*="after:rounded-["]::after { border-radius: 0.625rem !important; }
+button[style*="border-radius"], a[style*="border-radius"], input[style*="border-radius"], select[style*="border-radius"], textarea[style*="border-radius"], [role="button"][style*="border-radius"] { border-radius: 0.625rem !important; }
+body { font-family: Architects Daughter, cursive; }
+h1, h2, h3, h4, h5, h6 { font-family: Architects Daughter, cursive; }
+code, pre, kbd, samp { font-family: JetBrains Mono, monospace; }
+.shadow-sm { box-shadow: 3px 3px 0 0 rgba(0,0,0,0.55); }
+.shadow, .shadow-md { box-shadow: 6.5px 7.5px 0 0 rgba(0,0,0,1); }
+.shadow-lg, .shadow-xl, .shadow-2xl { box-shadow: 8px 10px 0 0 rgba(0,0,0,1); }
+
+:root, [data-theme] {
+  --primary: #ff5a1f;
+  --color-primary: #ff5a1f;
+  --ring: #ff5a1f;
+  --color-ring: #ff5a1f;
+  --sidebar-primary: #ff5a1f;
+  --primary-foreground: #111827;
+  --color-primary-foreground: #111827;
+  --sidebar-primary-foreground: #111827;
+  --accent: #22d3ee;
+  --color-accent: #22d3ee;
+  --accent-foreground: #111827;
+  --color-accent-foreground: #111827;
+  --secondary: #a78bfa;
+  --color-secondary: #a78bfa;
+  --secondary-foreground: #111827;
+  --color-secondary-foreground: #111827;
+  --background: #0b0b0f;
+  --color-background: #0b0b0f;
+  --card: #0b0b0f;
+  --color-card: #0b0b0f;
+  --popover: #0b0b0f;
+  --sidebar: #0b0b0f;
+  --muted: color-mix(in srgb, #0b0b0f 90%, #f5f5f5);
+  --color-muted: color-mix(in srgb, #0b0b0f 90%, #f5f5f5);
+  --foreground: #f5f5f5;
+  --color-foreground: #f5f5f5;
+  --card-foreground: #f5f5f5;
+  --color-card-foreground: #f5f5f5;
+  --popover-foreground: #f5f5f5;
+  --sidebar-foreground: #f5f5f5;
+  --muted-foreground: #f5f5f5aa;
+  --color-muted-foreground: #f5f5f5aa;
+  --border: #27272a;
+  --color-border: #27272a;
+  --input: #27272a;
+  --sidebar-border: #27272a;
+  --radius: 0.75rem;
+}
+
+/* === BRAND KIT VISUAL OVERRIDES === */
+
+body { background-color: var(--background) !important; }
+.bg-background, .bg-white { background-color: var(--background) !important; }
+.bg-card { background-color: var(--card) !important; }
+.text-background { color: var(--background) !important; }
+
+body { color: var(--foreground) !important; }
+.text-foreground, .text-card-foreground,
+.text-gray-900, .text-slate-900, .text-zinc-900, .text-neutral-900, .text-stone-900, .text-black { color: var(--foreground) !important; }
+.text-muted-foreground { color: var(--muted-foreground) !important; }
+
+.bg-primary,
+.bg-blue-400, .bg-blue-500, .bg-blue-600,
+.bg-indigo-400, .bg-indigo-500, .bg-indigo-600,
+.bg-violet-400, .bg-violet-500, .bg-violet-600,
+.bg-purple-400, .bg-purple-500, .bg-purple-600 { background-color: var(--primary) !important; }
+.text-primary,
+.text-blue-500, .text-blue-600,
+.text-indigo-500, .text-indigo-600,
+.text-violet-500, .text-violet-600,
+.text-purple-500, .text-purple-600 { color: var(--primary) !important; }
+.border-primary { border-color: var(--primary) !important; }
+.ring-primary { --tw-ring-color: var(--primary) !important; }
+.text-primary-foreground { color: var(--primary-foreground) !important; }
+
+.bg-accent { background-color: var(--accent) !important; }
+.text-accent { color: var(--accent) !important; }
+.border-accent { border-color: var(--accent) !important; }
+.text-accent-foreground { color: var(--accent-foreground) !important; }
+
+.bg-secondary { background-color: var(--secondary) !important; }
+.text-secondary { color: var(--secondary) !important; }
+.text-secondary-foreground { color: var(--secondary-foreground) !important; }
+
+.border-border,
+.border-gray-100, .border-slate-100, .border-zinc-100,
+.border-gray-200, .border-slate-200, .border-zinc-200, .border-neutral-200,
+.border-gray-300, .border-slate-300, .border-zinc-300, .border-neutral-300,
+.divide-border > * + * { border-color: var(--border) !important; }
+
+/* === BRAND KIT SHADOW OVERRIDES === */
+:root, [data-theme] {
+  --shadow-sm: 4px 4px 0px 0px #000000;
+  --shadow: 4px 4px 0px 0px #000000;
+  --shadow-md: 4px 4px 0px 0px #000000;
+  --shadow-lg: 4px 4px 0px 0px #000000;
+  --shadow-brutal-val: 4px 4px 0px 0px #000000;
+  --shadow-brutal-sm-val: 4px 4px 0px 0px #000000;
+  --shadow-brutal-lg-val: 4px 4px 0px 0px #000000;
+  --shadow-brutal-lg-hover-val: 4px 4px 0px 0px #000000;
+  --shadow-brutal-xl-val: 4px 4px 0px 0px #000000;
+}
+.shadow-sm,
+.shadow,
+.shadow-md,
+.shadow-lg,
+.shadow-xl,
+.shadow-2xl,
+.shadow-brutal,
+.shadow-brutal-sm,
+.shadow-brutal-lg,
+.shadow-brutal-xl,
+.shadow-brutal-hover,
+.hover\:shadow-brutal-hover:hover,
+.shadow-brutal-lg-hover,
+.hover\:shadow-brutal-lg-hover:hover { box-shadow: 4px 4px 0px 0px #000000 !important; }
+
+/* === RADIUS (all rounded-* → theme radius scale) === */
+.rounded-none  { border-radius: 0               !important; }
+.rounded-sm    { border-radius: 0.375rem       !important; }
+.rounded       { border-radius: 0.75rem    !important; }
+.rounded-md    { border-radius: 0.75rem    !important; }
+.rounded-lg    { border-radius: 1.125rem       !important; }
+.rounded-xl    { border-radius: 1.5rem         !important; }
+.rounded-2xl   { border-radius: 2.25rem         !important; }
+.rounded-3xl   { border-radius: 3rem         !important; }
+.rounded-full  { border-radius: 9999px          !important; }
+/* top/bottom/left/right variants */
+.rounded-t-sm, .rounded-t    { border-top-left-radius: 0.375rem;  border-top-right-radius: 0.375rem  !important; }
+.rounded-t-md, .rounded-t-lg { border-top-left-radius: 0.75rem; border-top-right-radius: 0.75rem !important; }
+.rounded-b-sm, .rounded-b    { border-bottom-left-radius: 0.375rem;  border-bottom-right-radius: 0.375rem  !important; }
+.rounded-b-md, .rounded-b-lg { border-bottom-left-radius: 0.75rem; border-bottom-right-radius: 0.75rem !important; }
+/* arbitrary values, pseudo-element variants and inline radii are clamped on CONTROLS only
+   (operator decision 2026-09-15, docs/superpowers/specs/2026-09-15-premium-display-brief.md P5):
+   the drift this rule was written for is a pill button or an input wandering off the
+   theme's scale. Sections, chapters, cards and media keep an authored rounded-[…] so a
+   curved chapter or a 2.5rem surface can exist; the same function serves preview and export. */
+button[class*="rounded-["], a[class*="rounded-["], input[class*="rounded-["], select[class*="rounded-["], textarea[class*="rounded-["], [role="button"][class*="rounded-["] { border-radius: 0.75rem !important; }
+button[class*="before:rounded-["]::before, a[class*="before:rounded-["]::before, [role="button"][class*="before:rounded-["]::before { border-radius: 0.75rem !important; }
+button[class*="after:rounded-["]::after, a[class*="after:rounded-["]::after, [role="button"][class*="after:rounded-["]::after { border-radius: 0.75rem !important; }
+button[style*="border-radius"], a[style*="border-radius"], input[style*="border-radius"], select[style*="border-radius"], textarea[style*="border-radius"], [role="button"][style*="border-radius"] { border-radius: 0.75rem !important; }
+
+[data-flowgen-unsplash-attribution="v1"] {
+  position: static !important;
+  inset: auto !important;
+  z-index: auto !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  clear: both !important;
+  box-sizing: border-box !important;
+}
